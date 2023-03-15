@@ -1,0 +1,14 @@
+{
+    "Products": {
+        "Categories": "/Products/Categories",
+        "fulfillmentschemas": "/products/fulfillmentschemas",
+        "Statistics": "/Products/Statistics"
+    },
+    "tenant": {
+        "bulk": "tenant/bulk"
+    },
+    "AllProducts": "Products",
+    "AllAttributes": "attributedefinitions",
+    "Order": "/Order/search",
+    "Reports": "Reports/Finance"
+}

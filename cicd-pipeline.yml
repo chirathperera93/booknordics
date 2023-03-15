@@ -1,0 +1,124 @@
+# Docker
+# Build and push an image to Azure Container Registry
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - src/apps/managementapp/*
+
+resources:
+- repo: self
+
+variables:
+  # Container registry service connection established during pipeline creation
+  dockerRegistryServiceConnection: '2d87ca86-f9dd-45d4-a42f-1e11e125a05d'
+  # Kubernetes service connection for staging environment named "Kubernetes staging" configured in project settings.
+  kubernetesStagingServiceConnection: '4eda13a4-9cb3-4015-b031-1f54bde9d176'
+  # Kubernetes service connection for production environment named "Kubernetes production" configured in project settings.
+  kubernetesProdServiceConnection: '10b0f4d5-8f5b-4a5f-85f5-9fa22a0c1f81'
+  imageRepository: 'managementapp'
+  containerRegistry: 'acrcommercetest.azurecr.io'
+  dockerfilePath: '$(Build.SourcesDirectory)/src/apps/managementapp/Dockerfile'
+  tag: '$(Build.BuildId)'
+
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+
+stages:
+- stage: Build_staging
+  displayName: Staging build and deploy
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: Docker@2
+      displayName: Build container image
+      inputs:
+        command: build
+        repository: $(imageRepository)/staging
+        dockerfile: $(dockerfilePath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
+          latest
+        arguments: >
+          --build-arg "REACT_APP_IDENTITY_API_BASE=https://auth.aks-staging.cenium.cloud"
+          --build-arg "REACT_APP_BASE=/admin"
+          --build-arg "REACT_APP_LOGLEVEL=error"
+    - task: Docker@2
+      displayName: Push container image
+      inputs:
+        command: push
+        repository: $(imageRepository)/staging
+        dockerfile: $(dockerfilePath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
+          latest
+    - task: KubernetesManifest@0
+      displayName: Deploy
+      inputs:
+        kubernetesServiceConnection: $(kubernetesStagingServiceConnection)
+        namespace: default
+        manifests: $(Build.SourcesDirectory)/src/apps/managementapp/deploy-staging.yml
+        containers: $(imageRepository)/staging:$(tag)
+
+- stage: Validation
+  displayName: Validate
+  jobs:
+  - job: waitForValidation
+    displayName: Wait for external validation
+    pool: server
+    timeoutInMinutes: 4320 # job times out in 3 days
+    steps:
+    - task: ManualValidation@0
+      timeoutInMinutes: 1440 # task times out in 1 day
+      inputs:
+        instructions: 'Please validate the staging deployment at https://aks-staging.cenium.cloud/admin/'
+        onTimeout: 'reject'
+
+- stage: Build_production
+  displayName: Production build and deploy
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: Docker@2
+      displayName: Build container image
+      inputs:
+        command: build
+        repository: $(imageRepository)/prod
+        dockerfile: $(dockerfilePath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
+          latest
+        arguments: >
+          --build-arg "REACT_APP_IDENTITY_API_BASE=https://auth.aks.cenium.cloud"
+          --build-arg "REACT_APP_BASE=/admin"
+          --build-arg "REACT_APP_LOGLEVEL=error"
+    - task: Docker@2
+      displayName: Push container image
+      inputs:
+        command: push
+        repository: $(imageRepository)/prod
+        dockerfile: $(dockerfilePath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
+          latest
+    - task: KubernetesManifest@0
+      displayName: Deploy
+      inputs:
+        kubernetesServiceConnection: $(kubernetesProdServiceConnection)
+        namespace: default
+        manifests: $(Build.SourcesDirectory)/src/apps/managementapp/deploy-production.yml
+        containers: $(imageRepository)/prod:$(tag)

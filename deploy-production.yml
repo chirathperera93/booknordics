@@ -1,0 +1,80 @@
+# Deployment manifest for management app
+# Creates deployment, service and ingress
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: admin
+    namespace: default
+spec:
+    selector:
+        matchLabels:
+            app: admin
+    template:
+        metadata:
+            labels:
+                app: admin
+            annotations:
+                kubernetes.io/change-cause: "Deployment"
+        spec:
+            containers:
+            -   name: admin
+                image: acrcommercetest.azurecr.io/managementapp/prod:latest
+                imagePullPolicy: Always
+                ports:
+                -   containerPort: 80
+                resources:
+                    limits:
+                        cpu: "200m"
+                        memory: "500Mi"
+                securityContext:
+                    allowPrivilegeEscalation: false
+                    privileged: false
+            automountServiceAccountToken: false
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: admin
+    namespace: default
+spec:
+    selector:
+        app: admin
+    ports:
+    -   port: 80
+        targetPort: 80
+        protocol: TCP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+    name: admin
+    namespace: default
+    annotations:
+        kubernetes.io/ingress.class: "nginx"
+spec:
+    rules:
+    -   host: aks.cenium.cloud
+        http:
+            paths:
+            -   path: "/admin"
+                pathType: Prefix
+                backend:
+                    service:
+                        name: admin
+                        port:
+                            number: 80
+    -   host: app.cenium.cloud
+        http:
+            paths:
+            -   path: "/admin"
+                pathType: Prefix
+                backend:
+                    service:
+                        name: admin
+                        port:
+                            number: 80
+    tls:
+    -   hosts:
+        -   aks.cenium.cloud
+        -   app.cenium.cloud
+        secretName: tls-prod-secret

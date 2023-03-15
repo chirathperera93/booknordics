@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/admin/static/css/main.02d78816.css",
+    "main.js": "/admin/static/js/main.36c72aa9.js",
+    "static/js/787.887ecafe.chunk.js": "/admin/static/js/787.887ecafe.chunk.js",
+    "static/media/booknordics_admin_image.png": "/admin/static/media/booknordics_admin_image.b7e4a7c1779e1a103e0e.png",
+    "index.html": "/admin/index.html",
+    "main.02d78816.css.map": "/admin/static/css/main.02d78816.css.map",
+    "main.36c72aa9.js.map": "/admin/static/js/main.36c72aa9.js.map",
+    "787.887ecafe.chunk.js.map": "/admin/static/js/787.887ecafe.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.02d78816.css",
+    "static/js/main.36c72aa9.js"
+  ]
+}

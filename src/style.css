@@ -1,0 +1,229 @@
+.mainRouterDiv {
+    margin-top: 100px;
+    width: 100%;
+}
+
+.actionBox {
+    width: 225px !important;
+    height: 175px !important;
+    margin: 16px !important;
+    border: 1px solid;
+    border-radius: 8px !important;
+}
+
+.drawerMargin {
+    padding-top: 0 !important;
+}
+
+.dashbordIcon {
+    height: 64px !important;
+    width: 64px !important;
+    margin: 16px 8px 16px 8px;
+}
+
+.dashbordAddIcon {
+    height: 22px !important;
+    width: 22px !important;
+    margin-left: 16px;
+    margin-top: 6px;
+}
+
+.dashbordCount {
+    font-size: 40px;
+    margin: 16px 8px 16px 8px;
+}
+
+.dashbordAddText {
+    font-size: 14px;
+    margin: 6px;
+    margin-top: 6px;
+}
+
+.dashboardBox {
+    border-bottom: 1px solid;
+    color: white;
+}
+
+.dashboardCardHeader {
+    margin: 8px;
+    text-align: center;
+    width: 100%;
+}
+
+.dashboardBoxHeader {
+    background-color: white;
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+    color: #00193c;
+}
+
+.dashboardCardFooter {
+    background-color: white;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-bottom: none;
+}
+
+.dashboardBoxIcon {
+    text-align: end;
+}
+
+.dashboardProductCatogories {
+    background-color: #b3005e !important;
+    background-image: linear-gradient(to bottom right, #1f3f6a, #bd4161);
+}
+
+.dashboardProducts {
+    background-color: #b3005e !important;
+    background-image: linear-gradient(to bottom right, #1f3f6a, #bd4161);
+}
+
+.dashboardAttributes {
+    background-color: #b3005e !important;
+    background-image: linear-gradient(to bottom right, #1f3f6a, #bd4161);
+}
+
+.OrderCard {
+    width: 160px !important;
+    border-left: 3px solid green;
+    margin: 4px;
+}
+
+.dashboardOrderHeader {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-left: 6px;
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    margin-right: 8px;
+}
+
+.dashboardOrders {
+    border-color: #00193c;
+    border: 1px solid;
+    padding: 8px;
+    margin-top: 16px;
+    width: 524px;
+    border-radius: 8px;
+    background-color: #bad7e9 !important;
+    background-image: linear-gradient(to bottom right, #6096b4, #93bfcf);
+    margin: 16px;
+}
+
+.dashboardCancelledOrders {
+    border-left: 3px solid red !important;
+}
+
+.orderViewAll {
+    font-size: 14px;
+    text-decoration: underline;
+    color: blue;
+}
+
+.orderCardguest {
+    border-bottom: 1px solid #00193c;
+    padding-bottom: 4px;
+    text-align: end;
+}
+
+.orderCardOrderNo {
+    border-bottom: 1px solid #00193c;
+    padding-bottom: 4px;
+}
+
+.categoriesSearch {
+    width: 75% !important;
+}
+
+.categoriesSearchArea {
+    border-radius: 8px;
+    border: 1px solid;
+}
+
+.categoriesDivider {
+    padding: 16px;
+    border-radius: 8px;
+    height: 100%;
+    background-color: #f9f9f9 !important;
+}
+
+.attributeCard {
+    padding: 16px;
+    border-radius: 8px;
+    padding: 24px;
+    height: 80%;
+}
+
+.productCard {
+    padding: 16px;
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 30px;
+}
+
+.editProductDialogBody {
+    height: 500px;
+    overflow: auto;
+}
+
+.categoryCard {
+    height: 40px;
+    border: 1px solid;
+    background: #00193c !important;
+    color: white !important;
+    margin-bottom: 4px;
+    border-radius: 25px !important;
+    font-size: 12px;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.categoryListDivider {
+    border-right: 1px solid;
+}
+
+.categoryList {
+    height: 270px !important;
+    overflow-y: auto !important;
+}
+
+.grid-header {
+    background-color: #8e8d8d !important;
+}
+
+.category-row {
+    height: 575px;
+}
+
+.category-attributes-list-area {
+    background-color: #f9f9f9;
+}
+
+.category-attributes-list {
+    height: 450px;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+}
+
+.category-dialog {
+    padding-left: 24px !important;
+    padding-right: 12px !important;
+}
+
+.category-header {
+    padding-top: 24px;
+    padding-bottom: 0;
+}
+
+.single-order-Card {
+    padding: 16px;
+    border-radius: 8px;
+    padding: 24px;
+    height: 100%;
+  }
+
+.order-line-row {
+    padding-right: 0 !important;
+    margin-right: 0 !important;
+}
